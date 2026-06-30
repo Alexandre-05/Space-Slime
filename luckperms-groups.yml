@@ -1,0 +1,43 @@
+# Permissions LuckPerms — Admin Plugin
+# Importer ou copier ces nœuds dans votre configuration LuckPerms
+
+groups:
+  helper:
+    permissions:
+      - admin.warn
+      - admin.warns
+      - admin.kick
+      - admin.mute
+      - admin.tempmute
+      - admin.unmute
+      - admin.mutelist
+      - admin.msg
+      - admin.reply
+      - admin.ignore
+      - admin.history
+      - admin.check
+
+  moderator:
+    parents:
+      - helper
+    permissions:
+      - admin.tempban
+      - admin.unban
+      - admin.banlist
+      - admin.note
+
+  admin:
+    parents:
+      - moderator
+    permissions:
+      - admin.ban
+      - admin.socialspy
+      - admin.notify
+
+  fondateur:
+    parents:
+      - admin
+    permissions:
+      - admin.view.ip
+      - admin.bypass.ban
+      - admin.bypass.mute

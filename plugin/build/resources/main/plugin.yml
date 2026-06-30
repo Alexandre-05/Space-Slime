@@ -1,0 +1,167 @@
+name: AdminPlugin
+version: 1.0.0
+main: fr.alex96x2.admin.AdminPlugin
+api-version: '26.1'
+authors: [alex96x2]
+description: Plugin d'administration avec panel web
+softdepend: [LuckPerms]
+
+commands:
+  ban:
+    description: Bannir un joueur
+    usage: /ban <joueur> [durée] [raison]
+    permission: admin.ban
+  tempban:
+    description: Bannir temporairement un joueur
+    usage: /tempban <joueur> <durée> [raison]
+    permission: admin.tempban
+  unban:
+    description: Débannir un joueur
+    usage: /unban <joueur|uuid>
+    permission: admin.unban
+  banlist:
+    description: Liste des bans actifs
+    usage: /banlist [page]
+    permission: admin.banlist
+  baninfo:
+    description: Informations sur le ban d'un joueur
+    usage: /baninfo <joueur>
+    permission: admin.banlist
+  mute:
+    description: Muter un joueur
+    usage: /mute <joueur> [durée] [raison]
+    permission: admin.mute
+  tempmute:
+    description: Muter temporairement un joueur
+    usage: /tempmute <joueur> <durée> [raison]
+    permission: admin.tempmute
+  unmute:
+    description: Démuter un joueur
+    usage: /unmute <joueur>
+    permission: admin.unmute
+  mutelist:
+    description: Liste des mutes actifs
+    usage: /mutelist [page]
+    permission: admin.mutelist
+  muteinfo:
+    description: Informations sur le mute d'un joueur
+    usage: /muteinfo <joueur>
+    permission: admin.mutelist
+  kick:
+    description: Expulser un joueur
+    usage: /kick <joueur> [raison]
+    permission: admin.kick
+  warn:
+    description: Avertir un joueur
+    usage: /warn <joueur> [raison]
+    permission: admin.warn
+  warns:
+    description: Voir les avertissements d'un joueur
+    usage: /warns <joueur>
+    permission: admin.warns
+  ignore:
+    description: Ignorer un joueur
+    usage: /ignore <joueur>
+    permission: admin.ignore
+  unignore:
+    description: Ne plus ignorer un joueur
+    usage: /unignore <joueur>
+    permission: admin.ignore
+  ignorelist:
+    description: Liste des joueurs ignorés
+    usage: /ignorelist
+    permission: admin.ignore
+  msg:
+    description: Envoyer un message privé
+    usage: /msg <joueur> <message>
+    aliases: [m, tell, w]
+    permission: admin.msg
+  r:
+    description: Répondre au dernier message privé
+    usage: /r <message>
+    aliases: [reply]
+    permission: admin.reply
+  socialspy:
+    description: Surveiller les messages privés
+    usage: /socialspy
+    permission: admin.socialspy
+  note:
+    description: Ajouter une note staff sur un joueur
+    usage: /note <joueur> <texte>
+    permission: admin.note
+  history:
+    description: Historique des sanctions d'un joueur
+    usage: /history <joueur>
+    permission: admin.history
+  check:
+    description: Informations sur un joueur
+    usage: /check <joueur>
+    permission: admin.check
+
+permissions:
+  admin.ban:
+    description: Bannir un joueur
+    default: op
+  admin.tempban:
+    description: Bannir temporairement
+    default: op
+  admin.unban:
+    description: Débannir
+    default: op
+  admin.banlist:
+    description: Voir les bans
+    default: op
+  admin.mute:
+    description: Muter
+    default: op
+  admin.tempmute:
+    description: Muter temporairement
+    default: op
+  admin.unmute:
+    description: Démuter
+    default: op
+  admin.mutelist:
+    description: Voir les mutes
+    default: op
+  admin.kick:
+    description: Expulser
+    default: op
+  admin.warn:
+    description: Avertir
+    default: op
+  admin.warns:
+    description: Voir les warns
+    default: op
+  admin.ignore:
+    description: Ignorer des joueurs
+    default: true
+  admin.msg:
+    description: Messages privés
+    default: true
+  admin.reply:
+    description: Répondre aux MP
+    default: true
+  admin.socialspy:
+    description: Social spy
+    default: op
+  admin.note:
+    description: Notes staff
+    default: op
+  admin.history:
+    description: Historique sanctions
+    default: op
+  admin.check:
+    description: Vérifier un joueur
+    default: op
+  admin.bypass.ban:
+    description: Contourner les bans
+    default: false
+  admin.bypass.mute:
+    description: Contourner les mutes
+    default: false
+  admin.notify:
+    description: Recevoir les notifications modération
+    default: op
+  admin.view.ip:
+    description: Voir les IP (fondateur)
+    default: false

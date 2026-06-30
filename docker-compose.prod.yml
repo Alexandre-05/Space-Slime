@@ -1,0 +1,22 @@
+# Panel seul — MariaDB externe (ex. Minestrator)
+# Usage : docker compose -f docker-compose.prod.yml up -d --build
+
+services:
+  panel:
+    build: .
+    container_name: mc-admin-panel
+    restart: unless-stopped
+    ports:
+      # 127.0.0.1 = accès local uniquement (derrière Nginx). Mettez 0.0.0.0 pour accès direct.
+      - "${PANEL_BIND:-127.0.0.1}:${PANEL_PORT:-8080}:8080"
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT:-3306}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      SERVER_PORT: 8080
+      JWT_SECRET: ${JWT_SECRET}
+      IP_HASH_SALT: ${IP_HASH_SALT}
+      IP_ENCRYPTION_KEY: ${IP_ENCRYPTION_KEY}
+      CORS_ORIGINS: ${CORS_ORIGINS}

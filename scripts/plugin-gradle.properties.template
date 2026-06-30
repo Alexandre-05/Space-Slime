@@ -1,0 +1,2 @@
+# Copier ce fichier dans chaque nouveau plugin : <plugin>/gradle.properties
+version=1.0.0

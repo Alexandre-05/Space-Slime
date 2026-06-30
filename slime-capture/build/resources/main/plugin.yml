@@ -1,0 +1,35 @@
+name: SlimeCapture
+version: 1.0.0
+main: fr.alex96x2.slimecapture.SlimeCapturePlugin
+api-version: '26.1'
+authors: [alex96x2]
+description: Capture des slimes à l'aspirateur façon Slime Rancher
+
+commands:
+  slimecapture:
+    description: Commandes de capture de slimes
+    aliases: [sc, slimerancher, sr]
+    usage: /<command> <gun|capsule|machine|status> [args]
+
+permissions:
+  slimecapture.use:
+    description: Utiliser l'aspirateur à slimes
+    default: true
+  slimecapture.gun:
+    description: Recevoir l'aspirateur
+    default: op
+  slimecapture.gun.others:
+    description: Donner l'aspirateur à un autre joueur
+    default: op
+  slimecapture.machine.place:
+    description: Placer un extracteur de gelée
+    default: true
+  slimecapture.machine.use:
+    description: Utiliser un extracteur de gelée
+    default: true
+  slimecapture.machine.give:
+    description: Recevoir un extracteur de gelée
+    default: op
+  slimecapture.machine.give.others:
+    description: Donner un extracteur à un autre joueur
+    default: op

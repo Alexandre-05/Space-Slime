@@ -1,0 +1,38 @@
+storage:
+  # AUTO = MariaDB si disponible, sinon JSON local
+  # MARIADB = base de données (repli JSON si indisponible)
+  # JSON = fichier local uniquement
+  type: AUTO
+  json-file: data.json
+
+database:
+  host: localhost
+  port: 3306
+  database: minecraft_admin
+  username: admin
+  password: adminpassword
+  pool-size: 10
+
+ip:
+  store: true
+  hash-salt: "change-me-in-production"
+  encryption-key: "change-me-32-chars-minimum-key!!"
+
+sync:
+  poll-interval-seconds: 5
+  expiration-check-seconds: 60
+  # Sync panel web : uniquement en mode MariaDB (ignoré en JSON)
+
+messages:
+  # Préfixe des messages — format MiniMessage, couleurs hex : <#RRGGBB> (ex. <#C62828>[Admin] )
+  prefix: "<#C62828>[Admin] "
+  ban-broadcast: true
+  msg-sound:
+    enabled: true
+    sound: ENTITY_EXPERIENCE_ORB_PICKUP
+    volume: 0.4
+    pitch: 1.5
+
+warns:
+  auto-ban-threshold: 0
+  auto-ban-duration: "1d"

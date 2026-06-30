@@ -1,0 +1,81 @@
+vacuum:
+  range: 8.0
+  capture-distance: 1.6
+  pull-strength: 0.42
+  session-ticks: 100
+  tick-interval: 2
+
+storage:
+  gun-capacity: 100
+  canister-max-stack: 20
+
+release:
+  cost: 1
+  spawn-size: 1
+  launch-distance: 4.5
+  launch-strength: 1.8
+  launch-upward: 0.25
+
+actionbar:
+  idle-seconds: 2
+
+yields:
+  "1": 1
+  "2": 2
+  "4": 4
+  "8": 8
+
+machine:
+  process-duration-ticks: 100
+  fuel-storage-max: 256
+  food-storage-max: 256
+  gel-storage-max: 512
+  fuel-cost-per-batch: 1
+  food-cost-per-batch: 1
+  gel-min: 1
+  gel-max: 3
+  slime-loss-chance: 0.35
+  fuel-materials:
+    - COAL
+    - CHARCOAL
+    - COAL_BLOCK
+  food-materials:
+    - SUGAR
+    - WHEAT
+    - HAY_BLOCK
+  fuel-units:
+    COAL: 16
+    CHARCOAL: 16
+    COAL_BLOCK: 128
+  food-units:
+    SUGAR: 4
+    WHEAT: 8
+    HAY_BLOCK: 16
+
+messages:
+  prefix: "<light_purple>[SlimeCapture]</light_purple> "
+  # Chat
+  vacuum-start: "<prefix><gray>Aspirateur activé</gray>"
+  vacuum-end: "<prefix><gray>Aspirateur désactivé</gray>"
+  # Barre d'action — {amount} = total cumulé
+  captured_one: "<green>+1</green> <gray>slime capturé</gray>"
+  captured_many: "<green>+{amount}</green> <gray>slimes capturés</gray>"
+  released_one: "<yellow>1</yellow> <gray>slime relâché</gray>"
+  released_many: "<yellow>{amount}</yellow> <gray>slimes relâchés</gray>"
+  gun-full: "<red>Réservoir plein</red> <dark_gray>— /sc capsule</dark_gray>"
+  gun-empty: "<yellow>Réservoir vide</yellow>"
+  no-gun-in-hand: "<red>Tenez l'aspirateur en main</red>"
+  inventory-full: "<red>Inventaire plein</red>"
+  capsule-created: "<green>{amount} slime(s)</green> <gray>en capsule(s)</gray> <dark_gray>|</dark_gray> <aqua>{remaining}/{capacity}</aqua>"
+  status: "<aqua>Réservoir : {current}/{capacity}</aqua>"
+  gun-received: "<green>Aspirateur reçu</green>"
+  gun-given: "<green>Aspirateur donné à {player}</green>"
+  release-blocked: "<red>Pas assez de place ici</red>"
+  machine-placed: "<green>Extracteur installé</green>"
+  machine-removed: "<yellow>Extracteur retiré</yellow>"
+  machine-invalid-block: "<red>Impossible de placer ici</red>"
+  machine-received: "<green>Extracteur reçu</green>"
+  machine-given: "<green>Extracteur donné à {player}</green>"
+  machine-gel-empty: "<yellow>Aucun gel en stock</yellow>"
+  machine-gel-withdrawn: "<green>{amount} gel(s) retiré(s)</green>"
+  machine-storage-full: "<red>Stockage gel plein</red>"

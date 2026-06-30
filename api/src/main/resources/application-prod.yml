@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:minecraft_admin}?useUnicode=true&characterEncoding=utf8&connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:adminpassword}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:change-me-generate-a-long-random-secret-key-for-jwt-signing}
+    expiration-hours: ${JWT_EXPIRATION_HOURS:8}
+  ip:
+    hash-salt: ${IP_HASH_SALT:change-me-in-production}
+    encryption-key: ${IP_ENCRYPTION_KEY:change-me-32-chars-minimum-key!!}
+  cors:
+    allowed-origins: ${CORS_ORIGINS:http://localhost:8080}

@@ -1,0 +1,83 @@
+# Couleurs au format MiniMessage : <#RRGGBB>
+# Le placeholder <prefix> est défini dans config.yml
+#
+# Palette utilisée :
+#   #FF5555 — erreur / alerte
+#   #55FF55 — succès
+#   #FFFF55 — avertissement
+#   #FFAA00 — titres
+#   #AAAAAA — labels
+#   #555555 — texte discret
+#   #FFFFFF — valeurs
+
+player-not-found: "<prefix><#FF5555>Joueur introuvable : {player}"
+no-permission: "<prefix><#FF5555>Vous n'avez pas la permission."
+usage: "<prefix><#FF5555>Usage : {usage}"
+
+join-banned: "<#FF5555>Vous êtes banni.\n<#AAAAAA>Raison : <#FFFFFF>{reason}\n<#AAAAAA>Expire : <#FFFFFF>{expires}"
+muted: "<prefix><#FF5252>Vous êtes mute. <#AAAAAA>Raison : <#FFFFFF>{reason} <#AAAAAA>| Temps restant : <#55FF55>{remaining}"
+mute-expired: "<prefix><#55FF55>Votre mute a expiré."
+
+ban-success: "<prefix><#55FF55>{player} a été banni."
+ban-broadcast: "<prefix><#FF5555>{player} <#AAAAAA>a été banni par <#FFFF55>{staff}<#AAAAAA>. Raison : <#FFFFFF>{reason}"
+unban-success: "<prefix><#55FF55>{player} a été débanni."
+already-banned: "<prefix><#FF5555>{player} est déjà banni."
+not-banned: "<prefix><#FF5555>{player} n'est pas banni."
+
+mute-success: "<prefix><#55FF55>{player} a été mute."
+unmute-success: "<prefix><#55FF55>{player} a été démute."
+already-muted: "<prefix><#FF5555>{player} est déjà mute."
+not-muted: "<prefix><#FF5555>{player} n'est pas mute."
+
+kick-success: "<prefix><#55FF55>{player} a été expulsé."
+kick-message: "<#FF5555>Vous avez été expulsé.\n<#AAAAAA>Raison : <#FFFFFF>{reason}"
+
+warn-success: "<prefix><#55FF55>{player} a été averti."
+warn-player: "<prefix><#FF5555>Vous avez reçu un avertissement. <#AAAAAA>Raison : <#FFFFFF>{reason}"
+warn-auto-ban: "<prefix><#FF5555>{player} a été banni automatiquement ({count} warns)."
+
+ignore-success: "<prefix><#55FF55>Vous ignorez désormais {player}."
+unignore-success: "<prefix><#55FF55>Vous n'ignorez plus {player}."
+ignore-self: "<prefix><#FF5555>Vous ne pouvez pas vous ignorer."
+ignore-list-empty: "<prefix><#AAAAAA>Aucun joueur ignoré."
+ignore-list-header: "<prefix><#AAAAAA>Joueurs ignorés :"
+
+msg-format-sent: "<#AAAAAA>[Moi -> {target}] <#FFFFFF>{message}"
+msg-format-received: "<#AAAAAA>[{sender} -> Moi] <#FFFFFF>{message}"
+msg-self: "<prefix><#FF5555>Vous ne pouvez pas vous envoyer de message."
+msg-offline: "<prefix><#FF5555>{player} n'est pas en ligne."
+msg-ignored: "<prefix><#FF5555>Ce joueur vous ignore."
+no-reply-target: "<prefix><#FF5555>Personne à qui répondre."
+
+socialspy-on: "<prefix><#55FF55>SocialSpy activé."
+socialspy-off: "<prefix><#FF5555>SocialSpy désactivé."
+socialspy-format: "<#555555>[Spy] <#AAAAAA>{sender} -> {target}: <#FFFFFF>{message}"
+
+note-success: "<prefix><#55FF55>Note ajoutée pour {player}."
+history-header: "<prefix><#FFAA00>Historique de {player}"
+history-bans: "<#FFFF55>Bans : <#FFFFFF>{count}"
+history-mutes: "<#FFFF55>Mutes : <#FFFFFF>{count}"
+history-kicks: "<#FFFF55>Kicks : <#FFFFFF>{count}"
+history-warns: "<#FFFF55>Warns : <#FFFFFF>{count}"
+history-entry: "<#AAAAAA>- [{date}] <#FFFFFF>{reason} <#AAAAAA>par {staff}"
+
+check-header: "<prefix><#FFAA00>Fiche de {player}"
+check-uuid: "<#AAAAAA>UUID : <#FFFFFF>{uuid}"
+check-first-seen: "<#AAAAAA>Première connexion : <#FFFFFF>{first_seen}"
+check-last-seen: "<#AAAAAA>Dernière connexion : <#FFFFFF>{last_seen}"
+check-playtime: "<#AAAAAA>Temps de jeu : <#FFFFFF>{playtime}"
+check-status-banned: "<#FF5555>BANNI"
+check-status-muted: "<#FFFF55>MUTE"
+check-status-clean: "<#55FF55>Aucune sanction active"
+check-ip: "<#AAAAAA>IP : <#FFFFFF>{ip}"
+
+banlist-header: "<prefix><#FFAA00>Bans actifs (page {page}/{total})"
+banlist-entry: "<#AAAAAA>- <#FFFFFF>{player} <#AAAAAA>| <#FFFFFF>{reason} <#AAAAAA>| expire: <#FFFFFF>{expires}"
+mutelist-header: "<prefix><#FFAA00>Mutes actifs (page {page}/{total})"
+mutelist-entry: "<#AAAAAA>- <#FFFFFF>{player} <#AAAAAA>| <#FFFFFF>{reason} <#AAAAAA>| expire: <#FFFFFF>{expires}"
+warns-header: "<prefix><#FFAA00>Warns de {player}"
+warns-entry: "<#AAAAAA>- [{date}] <#FFFFFF>{reason} <#AAAAAA>par {staff}"
+empty-list: "<prefix><#AAAAAA>Aucune entrée."
+
+duration-permanent: "Permanent"
+duration-expired: "Expiré"
