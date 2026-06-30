@@ -176,7 +176,7 @@ Le `project-name` dans le workflow (`mc-admin-panel`) doit correspondre au proje
 |----------|----------|
 | Panel inaccessible | `docker compose ps` — vérifiez que `panel` est `Up` |
 | Connexion BDD refusée | IP du VPS autorisée dans Minestrator, vérifiez `.env` |
-| 404 sur `/dashboard/` | Rebuild forcé : `docker compose build --no-cache && docker compose up -d` |
+| 404 sur `/dashboard/` | Vérifiez `http://IP:8080/api/health` — si 404 aussi, l'image Docker est obsolète. Rebuild : `docker compose build --no-cache && docker compose up -d` |
 | Login échoue | Compte par défaut `admin` / `admin123` au 1er démarrage |
 | Plugin ne sync pas | `storage.type: MARIADB`, même BDD, clés IP identiques |
 | Page blanche | Rebuild : `docker compose up -d --build` |

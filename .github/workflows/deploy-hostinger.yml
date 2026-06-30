@@ -31,3 +31,4 @@ jobs:
             IP_HASH_SALT=${{ secrets.IP_HASH_SALT }}
             IP_ENCRYPTION_KEY=${{ secrets.IP_ENCRYPTION_KEY }}
             CORS_ORIGINS=${{ vars.CORS_ORIGINS }}
+            BUILD_ID=${{ github.sha }}

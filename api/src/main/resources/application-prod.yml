@@ -8,6 +8,8 @@ server:
   port: ${SERVER_PORT:8080}
 
 app:
+  build:
+    id: ${BUILD_ID:prod}
   jwt:
     secret: ${JWT_SECRET:change-me-generate-a-long-random-secret-key-for-jwt-signing}
     expiration-hours: ${JWT_EXPIRATION_HOURS:8}

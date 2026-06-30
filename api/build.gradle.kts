@@ -30,4 +30,8 @@ dependencies {
 
 tasks.bootJar {
     archiveFileName.set("AdminApi-${project.version}.jar")
+    val buildId = findProperty("buildId")?.toString() ?: "local"
+    manifest {
+        attributes["Build-Id"] = buildId
+    }
 }

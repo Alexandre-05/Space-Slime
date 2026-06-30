@@ -25,6 +25,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/health").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
                         .requestMatchers("/api/dashboard/**").hasAnyRole("MODERATEUR", "ADMIN", "FONDATEUR")
                         .requestMatchers(HttpMethod.GET, "/api/players/**").hasAnyRole("MODERATEUR", "ADMIN", "FONDATEUR")

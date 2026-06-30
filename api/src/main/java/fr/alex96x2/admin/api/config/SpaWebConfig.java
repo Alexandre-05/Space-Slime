@@ -4,7 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
@@ -14,19 +13,17 @@ import java.io.IOException;
 public class SpaWebConfig implements WebMvcConfigurer {
 
     @Override
-    public void addViewControllers(@NonNull ViewControllerRegistry registry) {
-        registry.addRedirectViewController("/dashboard", "/dashboard/");
-    }
-
-    @Override
     public void addResourceHandlers(@NonNull ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/dashboard/assets/**")
+                .addResourceLocations("classpath:/static/assets/");
+
         registry.addResourceHandler("/dashboard/**")
                 .addResourceLocations("classpath:/static/")
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver() {
                     @Override
                     protected Resource getResource(@NonNull String resourcePath, @NonNull Resource location) throws IOException {
-                        if (resourcePath.startsWith("api/")) {
+                        if (resourcePath.startsWith("api/") || resourcePath.startsWith("assets/")) {
                             return null;
                         }
 
@@ -46,6 +43,9 @@ public class SpaWebConfig implements WebMvcConfigurer {
 
     private static String normalizeResourcePath(String resourcePath) {
         String path = resourcePath;
+        while (path.startsWith("/")) {
+            path = path.substring(1);
+        }
         if (path.startsWith("dashboard/")) {
             path = path.substring("dashboard/".length());
         }
