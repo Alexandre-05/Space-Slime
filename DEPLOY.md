@@ -188,6 +188,41 @@ docker compose -f docker-compose.prod.yml ps
 
 ---
 
+## Option 5 — Déploiement auto (GitHub Actions → Hostinger)
+
+À chaque `git push` sur `main`, le panel est redéployé automatiquement via [hostinger/deploy-on-vps](https://github.com/hostinger/deploy-on-vps).
+
+Fichier : `.github/workflows/deploy-hostinger.yml`
+
+### Configuration GitHub (une seule fois)
+
+**Settings → Secrets and variables → Actions**
+
+| Type | Nom | Valeur |
+|------|-----|--------|
+| Secret | `HOSTINGER_API_KEY` | Clé API Hostinger ([hpanel → API](https://hpanel.hostinger.com/profile/api)) |
+| Variable | `HOSTINGER_VM_ID` | ID du VPS (ex. `123456` dans l’URL hPanel ou `srv123456.hstgr.cloud`) |
+| Variable | `DB_HOST` | ex. `sql4.minestrator.com` |
+| Variable | `DB_PORT` | `3306` |
+| Variable | `DB_NAME` | ex. `minesr_XXXXX` |
+| Variable | `DB_USER` | ex. `minesr_XXXXX` |
+| Variable | `CORS_ORIGINS` | ex. `http://IP_DU_VPS:8080` |
+| Secret | `DB_PASSWORD` | Mot de passe MariaDB |
+| Secret | `JWT_SECRET` | Secret JWT (64+ caractères) |
+| Secret | `IP_HASH_SALT` | Identique au plugin |
+| Secret | `IP_ENCRYPTION_KEY` | Identique au plugin |
+
+**Repo privé** : configurez une [deploy key SSH](https://www.hostinger.com/support/how-to-deploy-from-private-github-repository-on-hostinger-docker-manager/) et ajoutez `personal-token` dans le workflow si besoin.
+
+### Déclenchement
+
+- Automatique : `git push` sur `main`
+- Manuel : GitHub → Actions → **Deploy to Hostinger** → **Run workflow**
+
+Le `project-name` dans le workflow (`mc-admin-panel`) doit correspondre au nom du projet dans le Docker Manager Hostinger.
+
+---
+
 ## Lier le plugin Minecraft
 
 Le plugin et le panel **partagent MariaDB**. Dans `plugins/AdminPlugin/config.yml` :

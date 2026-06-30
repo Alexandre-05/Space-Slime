@@ -1,0 +1,33 @@
+name: Deploy to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Deploy panel to Hostinger VPS
+        uses: hostinger/deploy-on-vps@v2
+        with:
+          api-key: ${{ secrets.HOSTINGER_API_KEY }}
+          virtual-machine: ${{ vars.HOSTINGER_VM_ID }}
+          project-name: mc-admin-panel
+          docker-compose-path: docker-compose.prod.yml
+          # Repo privé : ajoutez personal-token: ${{ secrets.GH_DEPLOY_TOKEN }}
+          environment-variables: |
+            PANEL_BIND=0.0.0.0
+            PANEL_PORT=8080
+            DB_HOST=${{ vars.DB_HOST }}
+            DB_PORT=${{ vars.DB_PORT }}
+            DB_NAME=${{ vars.DB_NAME }}
+            DB_USER=${{ vars.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            IP_HASH_SALT=${{ secrets.IP_HASH_SALT }}
+            IP_ENCRYPTION_KEY=${{ secrets.IP_ENCRYPTION_KEY }}
+            CORS_ORIGINS=${{ vars.CORS_ORIGINS }}
