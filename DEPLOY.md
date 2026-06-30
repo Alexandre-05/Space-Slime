@@ -20,7 +20,7 @@ copy .env.example .env
 docker compose up -d --build
 
 # 3. Accès
-# Panel : http://localhost:8080/dashboard/
+# Accueil : http://localhost:8080/ | Panel : http://localhost:8080/dashboard/
 # Login  : admin / admin123  (changez immédiatement)
 ```
 

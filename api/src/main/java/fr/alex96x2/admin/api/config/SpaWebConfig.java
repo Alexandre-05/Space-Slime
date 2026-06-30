@@ -14,7 +14,7 @@ import java.io.IOException;
 public class SpaWebConfig implements WebMvcConfigurer {
 
     @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
+    public void addViewControllers(@NonNull ViewControllerRegistry registry) {
         registry.addRedirectViewController("/dashboard", "/dashboard/");
     }
 
