@@ -17,7 +17,7 @@ jobs:
           api-key: ${{ secrets.HOSTINGER_API_KEY }}
           virtual-machine: ${{ vars.HOSTINGER_VM_ID }}
           project-name: mc-admin-panel
-          docker-compose-path: docker-compose.prod.yml
+          docker-compose-path: docker-compose.yml
           # Repo privé : ajoutez personal-token: ${{ secrets.GH_DEPLOY_TOKEN }}
           environment-variables: |
             PANEL_BIND=0.0.0.0

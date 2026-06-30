@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 $Jar = "$Root\api\build\libs\AdminApi-1.0.0.jar"
-$EnvFile = "$Root\.env.local"
+$EnvFile = "$Root\.env"
 
 if (-not (Test-Path $Jar)) {
     Write-Host "JAR introuvable. Lancez d'abord : .\scripts\deploy-local.ps1" -ForegroundColor Red
@@ -10,7 +10,7 @@ if (-not (Test-Path $Jar)) {
 }
 
 if (Test-Path $EnvFile) {
-    Write-Host "Chargement de .env.local..." -ForegroundColor Gray
+    Write-Host "Chargement de .env..." -ForegroundColor Gray
     Get-Content $EnvFile | ForEach-Object {
         if ($_ -match '^\s*([^#][^=]+)=(.*)$') {
             $name = $matches[1].Trim()
@@ -19,8 +19,8 @@ if (Test-Path $EnvFile) {
         }
     }
 } else {
-    Write-Host "Fichier .env.local absent — valeurs par défaut (DB localhost)." -ForegroundColor Yellow
-    Write-Host "Copiez .env.local.example vers .env.local pour configurer." -ForegroundColor Yellow
+    Write-Host "Fichier .env absent — valeurs par défaut." -ForegroundColor Yellow
+    Write-Host "Copiez .env.example vers .env pour configurer." -ForegroundColor Yellow
 }
 
 $port = if ($env:SERVER_PORT) { $env:SERVER_PORT } else { "8080" }

@@ -1,88 +1,64 @@
 # Mise en ligne du panel Admin
 
-Le panel (React + API) est servi sur **un seul port** (8080 par défaut). MariaDB stocke les données partagées avec le plugin Minecraft.
+Le panel (React + API) est servi sur **un seul port** (8080 par défaut). La base de données est **MariaDB Minestrator** (partagée avec le plugin Minecraft).
 
 ---
 
-## Option 1 — Docker (recommandé)
+## Docker (recommandé)
 
 ### Prérequis
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installé
 
-### Étapes
+- [Docker](https://docs.docker.com/get-docker/) sur le VPS ou la machine locale
+- Compte Minestrator : hôte SQL, base, utilisateur, mot de passe
+- **IP du VPS autorisée** dans le panel Minestrator (accès distant MySQL)
 
-```powershell
-# 1. Configuration
-copy .env.example .env
-# Éditez .env : mots de passe, JWT_SECRET, clés IP
-
-# 2. Lancement
-docker compose up -d --build
-
-# 3. Accès
-# Accueil : http://localhost:8080/ | Panel : http://localhost:8080/dashboard/
-# Login  : admin / admin123  (changez immédiatement)
-```
-
-### Arrêt / logs
-
-```powershell
-docker compose logs -f panel    # logs du panel
-docker compose down           # arrêt
-docker compose up -d --build  # rebuild après modification
-```
-
----
-
-## Option 2 — Sans Docker (Windows local)
-
-### Prérequis
-- Java 25+ (plugin Paper 26.1.x), Java 21+ (API Spring Boot), Node.js 20+, MariaDB (ou `docker compose up -d mariadb` seul)
-
-### Étapes
-
-```powershell
-# 1. MariaDB
-docker compose up -d mariadb
-
-# 2. Variables d'environnement (PowerShell)
-$env:DB_HOST="localhost"
-$env:DB_PASSWORD="adminpassword"
-$env:JWT_SECRET="votre-secret-jwt-long-et-aleatoire"
-$env:IP_HASH_SALT="change-me-in-production"
-$env:IP_ENCRYPTION_KEY="change-me-32-chars-minimum-key!!"
-$env:CORS_ORIGINS="http://localhost:8080"
-
-# 3. Build + lancement
-.\scripts\deploy-local.ps1
-cd api
-java -jar build\libs\AdminApi-1.0.0.jar --spring.profiles.active=prod
-```
-
-Panel accessible sur **http://localhost:8080/dashboard/**
-
----
-
-## Option 3 — VPS (serveur distant)
-
-### Sur le VPS (Linux)
+### Configuration
 
 ```bash
-git clone <votre-repo> admin-panel
-cd admin-panel
 cp .env.example .env
-nano .env   # configurez les secrets et CORS_ORIGINS=https://admin.votredomaine.fr
+nano .env   # DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, JWT_SECRET, CORS_ORIGINS
+```
 
+| Variable | Exemple |
+|----------|---------|
+| `DB_HOST` | `sql4.minestrator.com` |
+| `DB_NAME` | `minesr_ekt3j1SK` |
+| `DB_USER` | `minesr_ekt3j1SK` |
+| `DB_PASSWORD` | mot de passe Minestrator |
+| `PANEL_BIND` | `0.0.0.0` (accès direct) ou `127.0.0.1` (derrière Nginx) |
+| `CORS_ORIGINS` | `https://admin.votredomaine.fr` ou `http://IP:8080` |
+
+### Lancement
+
+```bash
 docker compose up -d --build
 ```
 
-### Ouvrir le port
-- Pare-feu : autoriser le port `8080` (ou `PANEL_PORT`)
-- Accès : `http://IP_DU_VPS:8080/dashboard/` (ou `/` redirige automatiquement)
+Ou via le script :
 
-### HTTPS avec Nginx (recommandé en production)
+```bash
+chmod +x scripts/deploy-vps.sh
+./scripts/deploy-vps.sh
+```
 
-Installez Nginx + Certbot sur le VPS, puis proxy vers le panel :
+### Accès
+
+- Accueil : `http://IP:8080/`
+- Panel : `http://IP:8080/dashboard/`
+- Login par défaut : `admin` / `admin123` (à changer immédiatement)
+
+### Commandes utiles
+
+```bash
+docker compose logs -f panel
+docker compose ps
+docker compose down
+docker compose build --no-cache && docker compose up -d   # rebuild forcé
+```
+
+### HTTPS avec Nginx (optionnel)
+
+`PANEL_BIND=127.0.0.1` si Nginx proxy vers le panel :
 
 ```nginx
 server {
@@ -100,58 +76,34 @@ server {
 }
 ```
 
-Mettez à jour `.env` :
-```
-CORS_ORIGINS=https://admin.votredomaine.fr
-```
+Mettez à jour `.env` : `CORS_ORIGINS=https://admin.votredomaine.fr`
 
 ---
 
-## Option 4 — VPS + MariaDB Minestrator (recommandé si MC hébergé chez Minestrator)
+## Sans Docker (développement local)
 
-Le panel tourne sur votre VPS en Docker. La base reste sur **Minestrator** (partagée avec le plugin MC).
+### Prérequis
 
-### Prérequis Minestrator
+- Java 21+ (API Spring Boot), Node.js 20+
+- Accès à la BDD Minestrator (ou variables pointant vers votre instance)
 
-1. Récupérez dans le panel Minestrator : **hôte SQL**, **base**, **utilisateur**, **mot de passe**
-2. Autorisez l'accès distant à MySQL depuis l'**IP publique du VPS** (section BDD / accès distant Minestrator)
-3. Alignez les clés IP avec `plugins/AdminPlugin/config.yml`
+### Étapes
 
-### Sur le VPS
+```powershell
+copy .env.example .env
+# Éditez .env avec vos identifiants Minestrator
 
-```bash
-git clone <votre-repo> admin-panel
-cd admin-panel
-
-cp .env.prod.example .env
-nano .env   # DB_HOST, DB_NAME, DB_USER, DB_PASSWORD, JWT_SECRET, CORS_ORIGINS
-
-chmod +x scripts/deploy-vps.sh
-./scripts/deploy-vps.sh
+.\scripts\deploy-local.ps1
+.\scripts\start-panel.ps1
 ```
 
-Ou manuellement :
+Panel accessible sur **http://localhost:8080/dashboard/**
 
-```bash
-docker compose -f docker-compose.prod.yml up -d --build
-```
+---
 
-### Variables `.env` importantes
+## Plugin Minecraft (Minestrator)
 
-| Variable | Exemple |
-|----------|---------|
-| `DB_HOST` | `sql4.minestrator.com` |
-| `DB_NAME` | `minesr_ekt3j1SK` |
-| `DB_USER` | `minesr_ekt3j1SK` |
-| `DB_PASSWORD` | mot de passe Minestrator |
-| `PANEL_BIND` | `127.0.0.1` (Nginx) ou `0.0.0.0` (accès direct) |
-| `CORS_ORIGINS` | `https://admin.votredomaine.fr` |
-
-### HTTPS (Nginx sur le VPS)
-
-`PANEL_BIND=0.0.0.0` par défaut — accès direct via `http://IP:8080`. Mettez `127.0.0.1` si vous passez par Nginx sur le VPS.
-
-### Plugin Minecraft (Minestrator)
+Dans `plugins/AdminPlugin/config.yml` :
 
 ```yaml
 storage:
@@ -169,28 +121,11 @@ ip:
   encryption-key: "<identique à IP_ENCRYPTION_KEY>"
 ```
 
-### Commandes utiles
-
-```bash
-docker compose -f docker-compose.prod.yml logs -f panel
-docker compose -f docker-compose.prod.yml down
-docker compose -f docker-compose.prod.yml up -d --build   # après mise à jour
-docker compose -f docker-compose.prod.yml ps
-```
-
-### Dépannage Minestrator
-
-| Problème | Solution |
-|----------|----------|
-| Connexion BDD refusée | Vérifier IP du VPS autorisée dans Minestrator |
-| Flyway baseline | Déjà géré (`baseline-on-migrate` + `baseline-version: 0`) |
-| Plugin ne sync pas | `storage.type: MARIADB`, même BDD, clés IP identiques |
-
 ---
 
-## Option 5 — Déploiement auto (GitHub Actions → Hostinger)
+## Déploiement auto (GitHub Actions → Hostinger)
 
-À chaque `git push` sur `main`, le panel est redéployé automatiquement via [hostinger/deploy-on-vps](https://github.com/hostinger/deploy-on-vps).
+À chaque `git push` sur `main`, le panel est redéployé via [hostinger/deploy-on-vps](https://github.com/hostinger/deploy-on-vps).
 
 Fichier : `.github/workflows/deploy-hostinger.yml`
 
@@ -201,54 +136,27 @@ Fichier : `.github/workflows/deploy-hostinger.yml`
 | Type | Nom | Valeur |
 |------|-----|--------|
 | Secret | `HOSTINGER_API_KEY` | Clé API Hostinger ([hpanel → API](https://hpanel.hostinger.com/profile/api)) |
-| Variable | `HOSTINGER_VM_ID` | ID du VPS (ex. `123456` dans l’URL hPanel ou `srv123456.hstgr.cloud`) |
+| Variable | `HOSTINGER_VM_ID` | ID du VPS |
 | Variable | `DB_HOST` | ex. `sql4.minestrator.com` |
 | Variable | `DB_PORT` | `3306` |
 | Variable | `DB_NAME` | ex. `minesr_XXXXX` |
 | Variable | `DB_USER` | ex. `minesr_XXXXX` |
 | Variable | `CORS_ORIGINS` | ex. `http://IP_DU_VPS:8080` |
-| Secret | `DB_PASSWORD` | Mot de passe MariaDB |
+| Secret | `DB_PASSWORD` | Mot de passe Minestrator |
 | Secret | `JWT_SECRET` | Secret JWT (64+ caractères) |
 | Secret | `IP_HASH_SALT` | Identique au plugin |
 | Secret | `IP_ENCRYPTION_KEY` | Identique au plugin |
 
-**Repo privé** : configurez une [deploy key SSH](https://www.hostinger.com/support/how-to-deploy-from-private-github-repository-on-hostinger-docker-manager/) et ajoutez `personal-token` dans le workflow si besoin.
+**Repo privé** : configurez une [deploy key SSH](https://www.hostinger.com/support/how-to-deploy-from-private-github-repository-on-hostinger-docker-manager/) si besoin.
 
 ### Déclenchement
 
 - Automatique : `git push` sur `main`
 - Manuel : GitHub → Actions → **Deploy to Hostinger** → **Run workflow**
 
-Le `project-name` dans le workflow (`mc-admin-panel`) doit correspondre au nom du projet dans le Docker Manager Hostinger.
+Le `project-name` dans le workflow (`mc-admin-panel`) doit correspondre au projet dans le Docker Manager Hostinger.
 
----
-
-## Lier le plugin Minecraft
-
-Le plugin et le panel **partagent MariaDB**. Dans `plugins/AdminPlugin/config.yml` :
-
-```yaml
-storage:
-  type: MARIADB   # ou AUTO
-
-database:
-  host: IP_OU_HOSTNAME_MARIADB   # localhost si MC sur la même machine
-  port: 3306
-  database: minecraft_admin
-  username: admin
-  password: <meme mot de passe que DB_PASSWORD dans .env>
-
-ip:
-  hash-salt: "<identique à IP_HASH_SALT>"
-  encryption-key: "<identique à IP_ENCRYPTION_KEY>"
-```
-
-| Où tourne MC ? | `database.host` |
-|----------------|-----------------|
-| Même machine que Docker | `localhost` |
-| Autre machine | IP du serveur MariaDB |
-
-> MariaDB doit être accessible depuis le serveur Minecraft (port 3306 ouvert si distant).
+> Sur Hostinger, si le panel ne se met pas à jour après un push, forcez un rebuild : supprimez le projet Docker ou lancez `docker compose build --no-cache` sur le VPS.
 
 ---
 
@@ -256,10 +164,9 @@ ip:
 
 - [ ] Changer le mot de passe `admin` / `admin123` après la 1ère connexion
 - [ ] Générer un `JWT_SECRET` long et aléatoire (64+ caractères)
-- [ ] Changer tous les mots de passe dans `.env`
 - [ ] Aligner `IP_HASH_SALT` et `IP_ENCRYPTION_KEY` entre `.env` et le plugin
 - [ ] Utiliser HTTPS (Nginx + Let's Encrypt) si exposé sur Internet
-- [ ] Ne pas exposer le port 3306 (MariaDB) publiquement
+- [ ] Ne pas committer le fichier `.env`
 
 ---
 
@@ -268,7 +175,8 @@ ip:
 | Problème | Solution |
 |----------|----------|
 | Panel inaccessible | `docker compose ps` — vérifiez que `panel` est `Up` |
-| Erreur connexion BDD | Attendez que MariaDB soit healthy, vérifiez `.env` |
+| Connexion BDD refusée | IP du VPS autorisée dans Minestrator, vérifiez `.env` |
+| 404 sur `/dashboard/` | Rebuild forcé : `docker compose build --no-cache && docker compose up -d` |
 | Login échoue | Compte par défaut `admin` / `admin123` au 1er démarrage |
-| Plugin ne sync pas | `storage.type: MARIADB`, même BDD, panel en ligne |
+| Plugin ne sync pas | `storage.type: MARIADB`, même BDD, clés IP identiques |
 | Page blanche | Rebuild : `docker compose up -d --build` |

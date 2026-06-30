@@ -1,5 +1,4 @@
 .env
-.env.local
 **/build/
 **/.gradle/
 web/node_modules/

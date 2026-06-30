@@ -34,22 +34,17 @@ Admin/
 
 ## 1. Base de données
 
-```bash
-docker compose up -d
-```
-
-MariaDB sera accessible sur `localhost:3306` :
-- Base : `minecraft_admin`
-- User : `admin` / `adminpassword`
+La base est hébergée chez **Minestrator** (partagée avec le plugin). Configurez les identifiants dans `.env` — voir [DEPLOY.md](DEPLOY.md).
 
 ## Déploiement du panel
 
-Voir **[DEPLOY.md](DEPLOY.md)** pour la mise en ligne (Docker, local, VPS).
+Voir **[DEPLOY.md](DEPLOY.md)** pour la mise en ligne (Docker + Minestrator, Hostinger).
 
 ```powershell
 copy .env.example .env
+# Éditez .env avec vos identifiants Minestrator
 docker compose up -d --build
-# Panel : http://localhost:8080  (admin / admin123)
+# Accueil : http://localhost:8080/ | Panel : http://localhost:8080/dashboard/
 ```
 
 ## 2. API (panel backend) — développement
