@@ -7,8 +7,8 @@ services:
     container_name: mc-admin-panel
     restart: unless-stopped
     ports:
-      # 127.0.0.1 = accès local uniquement (derrière Nginx). Mettez 0.0.0.0 pour accès direct.
-      - "${PANEL_BIND:-127.0.0.1}:${PANEL_PORT:-8080}:8080"
+      # 0.0.0.0 = accès direct (Hostinger, http://IP:8080). Mettez 127.0.0.1 si Nginx sur le VPS.
+      - "${PANEL_BIND:-0.0.0.0}:${PANEL_PORT:-8080}:8080"
     environment:
       DB_HOST: ${DB_HOST}
       DB_PORT: ${DB_PORT:-3306}

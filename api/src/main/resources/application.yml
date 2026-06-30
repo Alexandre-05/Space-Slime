@@ -1,6 +1,8 @@
 spring:
   application:
     name: admin-api
+  mvc:
+    static-path-pattern: /dashboard/**
   datasource:
     url: jdbc:mariadb://localhost:3306/minecraft_admin?useUnicode=true&characterEncoding=utf8&connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
     username: admin

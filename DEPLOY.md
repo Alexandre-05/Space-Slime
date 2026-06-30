@@ -20,7 +20,7 @@ copy .env.example .env
 docker compose up -d --build
 
 # 3. Accès
-# Panel : http://localhost:8080
+# Panel : http://localhost:8080/dashboard/
 # Login  : admin / admin123  (changez immédiatement)
 ```
 
@@ -59,7 +59,7 @@ cd api
 java -jar build\libs\AdminApi-1.0.0.jar --spring.profiles.active=prod
 ```
 
-Panel accessible sur **http://localhost:8080**
+Panel accessible sur **http://localhost:8080/dashboard/**
 
 ---
 
@@ -78,7 +78,7 @@ docker compose up -d --build
 
 ### Ouvrir le port
 - Pare-feu : autoriser le port `8080` (ou `PANEL_PORT`)
-- Accès : `http://IP_DU_VPS:8080`
+- Accès : `http://IP_DU_VPS:8080/dashboard/` (ou `/` redirige automatiquement)
 
 ### HTTPS avec Nginx (recommandé en production)
 
@@ -149,7 +149,7 @@ docker compose -f docker-compose.prod.yml up -d --build
 
 ### HTTPS (Nginx sur le VPS)
 
-`PANEL_BIND=127.0.0.1` par défaut — le panel n'est pas exposé directement. Configurez Nginx comme en option 3, proxy vers `127.0.0.1:8080`.
+`PANEL_BIND=0.0.0.0` par défaut — accès direct via `http://IP:8080`. Mettez `127.0.0.1` si vous passez par Nginx sur le VPS.
 
 ### Plugin Minecraft (Minestrator)
 
